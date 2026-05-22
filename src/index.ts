@@ -1,23 +1,24 @@
-import express from "express"; 
-import cors from "cors";
-import eventRoutes from "./routes/eventRoutes.js";
-import categoryRoutes from "./routes/categoryRoutes.js";
-import speakerRoutes from "./routes/speakerRoutes.js";
- 
-const app = express(); 
-const PORT = process.env.PORT || 3000;
- 
-app.use(cors()); 
-app.use(express.json()); 
-app.use("/events",eventRoutes)
-app.use("/categories", categoryRoutes)
-app.use("/speakers", speakerRoutes)
- 
-app.get("/", (req, res) => { 
- res.send("Backend Invofest"); 
-}); 
- 
+import express from 'express';
+import cors from 'cors';
+import eventRoutes from './routes/eventRoute.js';
+import categoryRoutes from './routes/categoryRoute.js';
+import pembicaraRoutes from './routes/pembicaraRoute.js';
 
-app.listen(PORT, () => { 
- console.log(`Server is running on http://localhost:${PORT}`); 
+const app = express();
+const port = 3000;
+
+app.use(cors());
+app.use(express.json());
+
+app.get('/', (req, res) => {
+  res.send('Hello, World!');
+});
+
+app.use("/events", eventRoutes);
+app.use("/categories", categoryRoutes); // Endpoint: http://localhost:3000/categories
+app.use("/pembicara", pembicaraRoutes);
+
+
+app.listen(port, () => {
+  console.log(`Server is running on http://localhost:${port}`);
 });

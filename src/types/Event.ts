@@ -1,10 +1,9 @@
-export type Event = {
-  id: number;
-  title: string;
-  categoryId: number;
-  speakersId : number ;
-  location: string;
-  dateEvent: string;
-  description: string;
-  createdAt: string;
-}
+export interface Event {
+    id: number;
+    name: string;
+    category: string;
+    date: string;
+    location: string;
+    description: string;
+    status: string;
+};
