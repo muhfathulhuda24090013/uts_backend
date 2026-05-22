@@ -16,7 +16,7 @@ export const createPembicara = async (req: Request, res: Response): Promise<void
   }
 
   const data = await prisma.pembicara.create({
-    data: { name, role, email, photo, bio, status },
+    data: { name, role, email,photo, bio, status },
   });
 
   res.status(201).json(data);

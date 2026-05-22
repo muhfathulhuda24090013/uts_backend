@@ -3,42 +3,42 @@ generator client {
 }
 
 datasource db {
-  provider  = "postgresql"
-  url       = env("DATABASE_URL")
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
   directUrl = env("DIRECT_URL")
 }
 
-model Category {
-  id        Int      @id @default(autoincrement())
-  name      String
-  createdAt DateTime @default(now()) @map("created_at")
-  events    Event[]
-
-  @@map("category_events")
-}
-
-model Pembicara {
-  id        Int      @id @default(autoincrement())
-  name      String
-  role      String
-  image     String
-  createdAt DateTime @default(now()) @map("created_at")
-  events    Event[]
-
-  @@map("pembicara")
-}
-
 model Event {
-  id          Int       @id @default(autoincrement())
-  title       String
+  id          Int      @id @default(autoincrement())
+  name        String
+  categoryId  Int      @map("category_id")
+  pembicaraId Int      @map("pembicara_id") // ← 1. Tambah field foreign key ini
   location    String
-  dateEvent   DateTime  @map("date_event")
-  description String
-  createdAt   DateTime  @default(now()) @map("created_at")
-  categoryId  Int       @map("category_id")
-  pembicaraId Int       @map("pembicara_id")
+  dateEvent   DateTime @map("date_event")
+  description String   @db.Text
+  createdAt   DateTime @default(now()) @map("created_at")
+
   category    Category  @relation(fields: [categoryId], references: [id])
-  pembicara   Pembicara @relation(fields: [pembicaraId], references: [id])
+  pembicara   pembicara @relation(fields: [pembicaraId], references: [id]) // ← 2. Tambah garis relasi ke model pembicara
 
   @@map("events")
+}
+
+model Category {
+  id     Int     @id @default(autoincrement())
+  nama   String
+  events Event[]
+
+  @@map("categories")
+}
+
+model pembicara {
+  id     Int     @id @default(autoincrement())
+  name   String
+  role   String
+  email  String
+  photo  String?
+  bio    String  @default("")
+  status String  @default("")
+  events Event[] // ← 3. Tambah field array ini agar relasi dua arahnya valid
 }
