@@ -7,7 +7,9 @@ import pembicaraRoutes from './routes/pembicaraRoute.js';
 const app = express();
 const port = 3000;
 
-app.use(cors());
+app.use(cors({
+  origin: 'http://localhost:5173' // atau cukup cors() untuk mengizinkan semua
+}));
 app.use(express.json());
 
 app.get('/', (req, res) => {
